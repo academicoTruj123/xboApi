@@ -27,10 +27,25 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => '64.233.171.108',
+                'username' => 'chab.28.08@gmail.com',
+                'password' => 'pool1207',
+                'port' => '587',
+                'encryption' => 'tls',   
+                'streamOptions' => [ 'ssl' =>
+                       [ 'allow_self_signed' => true,
+                           'verify_peer' => false,
+                           'verify_peer_name' => false,
+                       ],
+                   ]                
+            ],
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -50,10 +65,16 @@ $config = [
                 [
                     'class'=>'yii\rest\UrlRule',
                     //'pluralize'=>false,
-                    'controller' =>'solorest',                  
+                    'controller' =>['solorest','loginrest','tablacodigorest'],                  
                     'tokens'=>[
                         '{id}'=>'<id:\\w+>'
-                    ]
+                    ],
+                    'extraPatterns'=>[
+                        'POST registrarlogincliente'=>'loginrest/registrarlogincliente',
+                        'POST activarcuenta'=>'loginrest/activarcuenta',
+                        'POST recuperarcontrasena'=>'loginrest/recuperarcontrasena',
+                        'POST validarlogin'=>'loginrest/validarlogin'
+                    ],
                 ]
             ],
         ],     

@@ -10,4 +10,11 @@ use yii\rest\ActiveController;
 class SolorestController extends ActiveController
 {
     public $modelClass ='app\models\TablaPrueba';
+
+    
+    public function init()
+    {
+        parent::init();
+        echo "llego al init"; die();       
+    }
 }
