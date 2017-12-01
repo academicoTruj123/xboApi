@@ -144,8 +144,7 @@ $model->save();
     }
     
     public function actionRecuperarcontrasena(){
-        \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;  
-        
+        \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;          
         $modellogin = new LoginForm();
         $modellogin->attributes = \yii::$app->request->post();                
         $modelUser = new Usuario();        
