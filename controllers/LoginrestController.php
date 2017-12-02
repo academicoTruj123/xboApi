@@ -7,6 +7,8 @@ use app\models\Usuario;
 use app\models\UsuarioBuscar;
 use app\models\UsuarioClienteReg;
 use app\models\Usuariocliente;
+use app\models\Usuarioempresa;
+use app\models\UsuarioempresaReg;
 use app\models\Tablacodigo;
 use app\models\LoginForm;
 use app\models\Acceso;
@@ -101,33 +103,61 @@ class LoginrestController extends ActiveController
          return array('status' => true, 'data'=> $modelUser);         
     }
     
-    public function actionRegistrarLoginEmpresa(){
-         \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;             
-// crear un modelo de registro de usuario empresa         
-//registrar en usuario
-         //registar  en usuarioempresa
-         //enviar correo con codigo de confirmacion
-         
-        $model = new Usuario();  
-        $model->attributes = \yii::$app->request->post();              
-//$model->intIdUsuario
-//$model->vchCorreo
-$model->setPassword($model->vchClave);
-$model->generatedCodeVerificacion();
-$model->generateAuthKey();
-$model->intCodigoEstado = 1;
-//$model->dtiFechaAlta
-//$model->dtiFechaBaja
-$model->bitActivo = 1;
-$model->dtiFechaReg = date('Y-m-d H:i:s');
-//$model->dtiFechaUltMod
-$model->intTipoLogin = 1;
-$model->intCodigoRol = 1;
-$model->save();
-         
-         echo "llego al login de usuario ";
-         echo print_r($model->intIdUsuario);          
-         die(); 
+    public function actionRegistrarloginempresa(){
+         \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;  
+
+        $modeltablacodigo = new Tablacodigo();          
+        $modellogin = new UsuarioempresaReg();  
+        $modellogin->attributes = \yii::$app->request->post();
+  
+        //Validar[que no exista un registro con ese correo]        
+        $modelUser = new Usuario(); 
+        if ($modelUser::findByUsername($modellogin->vchCorreo) == null) {                    
+            
+        }else{
+              return array('status' => false, 'data'=> 'Correo ya existe,debe registrarse con otro correo.');
+        }
+         //REGISTRO DE USUARIO        
+        $modelUser->vchCorreo = $modellogin->vchCorreo;
+        $modelUser->setPassword($modellogin->vchClave);
+        $modelUser->generatedCodeVerificacion();
+        $modelUser->generateAuthKey();
+        $modelUser->intCodigoEstado = $modeltablacodigo->getIdxCodigo(Usuario::STATUS_PENDIENTE_ACTIVACION);
+        $modelUser->bitActivo = 1;
+        $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
+        $modelUser->intTipoLogin = 1;
+        $modelUser->intCodigoRol = 1;
+        $modelUser->save();
+
+        //REGISTRO DE USUARIOCLIENTE        
+        $modelUserempresa = new Usuarioempresa();              
+        $modelUserempresa->intIdUsuario =$modelUser->intIdUsuario;
+        $modelUserempresa->vchRazonSocial ='';
+        $modelUserempresa->vchRuc=$modellogin->vchRuc;
+        $modelUserempresa->vchContacto = '';
+        $modelUserempresa->vchContactoCorreo ='';
+        $modelUserempresa->vchNombreComercial = $modellogin->vchNombreComercial;
+        //$modelUserempresa->dtmFechaCreacion =null;
+        $modelUserempresa->intIdUbigeo = 0;
+        $modelUserempresa->vchDomicilioUbigeo ='';
+        $modelUserempresa->vchDomicilioDireccion='';
+        $modelUserempresa->vchCelular='';
+        $modelUserempresa->vchTelefonoFijo='';
+        $modelUserempresa->intCodigoEstado=1;
+        $modelUserempresa->bitActivo =true;
+        $modelUserempresa->intIdUsuarioReg =0;
+        $modelUserempresa->dtiFechaReg=date('Y-m-d H:i:s');
+        $modelUserempresa->intIdUsuarioUltMod =0;
+        $modelUserempresa->dtiFechaUltMod=$modelUserempresa->dtiFechaReg;        
+        $modelUserempresa->save();    
+        
+        Yii::$app->mailer->compose()
+                ->setTo($modellogin->vchCorreo)
+                ->setFrom('chab.28.08@gmail.com')
+                ->setSubject('Codigo de verificacion')
+                ->setTextBody('Felicitaciones.!!!'.$modellogin->vchNombreComercial.' acaba de registrar su cuenta, solo falta la activacion, para eso escriba el siguiente codigo de verificacion : '.$modelUser->vchCodVerificacion.', para confirmar su registro.')
+                ->send();         
+         return array('status' => true, 'data'=> $modelUser);
     }
     
     public function actionActivarcuenta(){
@@ -166,10 +196,22 @@ $model->save();
         $modelacceso = new Acceso(); 
         $modellogin = new LoginForm();
         $modellogin->attributes = \yii::$app->request->post();   
-        //        verificar si esta registrado
-        // verificar el estado
         $modelUser = new Usuario();        
-        $modelUser = Usuario::findByUsername($modellogin->username);
+        
+        //falta verificar el tipo de rol
+        if($modellogin->username=='adminexpoboda@expoboda.com'){
+            if($modellogin->password=='adminexpoboda' ){
+                $modelUser->intIdUsuario=999;
+                $modelUser->vchCorreo='adminexpoboda@expoboda.com';
+                return array('status' => true, 'data'=> $modelUser);
+                
+            }else{
+                return array('status' => false, 'data'=>'Credenciales incorrectas');
+            }            
+        }else{            
+            $modelUser = Usuario::findByUsername($modellogin->username);    
+        }
+                                
         if($modelUser == null){
             return array('status' => false, 'data'=> 'cuenta no registrada.');
         }        

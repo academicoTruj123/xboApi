@@ -73,7 +73,9 @@ $config = [
                         'POST registrarlogincliente'=>'loginrest/registrarlogincliente',
                         'POST activarcuenta'=>'loginrest/activarcuenta',
                         'POST recuperarcontrasena'=>'loginrest/recuperarcontrasena',
-                        'POST validarlogin'=>'loginrest/validarlogin'
+                        'POST validarlogin'=>'loginrest/validarlogin',
+                        'POST registrarloginempresa'=>'loginrest/registrarloginempresa',
+                        
                     ],
                 ]
             ],
