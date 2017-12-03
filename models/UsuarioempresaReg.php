@@ -11,8 +11,14 @@ class UsuarioempresaReg extends Model
     public $vchRuc;
     public $vchCorreo;
     public $vchClave;
-    public $intTipoLogin;   
-
+    public $intTipoLogin;  
+    public $vchTipoLogin;
+    
+    public $urlapiLogin ='';
+    public $mensaje=''; 
+    
+    const LOGIN_CUENTA_SISTEMA = '0201';
+    const LOGIN_CUENTA_FACEBOOK = '0202';
     
     /**
      * @inheritdoc
@@ -26,6 +32,7 @@ class UsuarioempresaReg extends Model
             [['vchClave'], 'string', 'max' => 20],            
             [['vchRuc'], 'string', 'max' => 11],
             [['vchNombreComercial'], 'string', 'max' => 200],
+            [['vchTipoLogin'], 'string', 'max' => 6],
         ];                
     }
   
