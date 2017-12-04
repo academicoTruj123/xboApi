@@ -85,4 +85,11 @@ class Usuarioempresa extends \yii\db\ActiveRecord
             'dtiFechaUltMod' => 'Dti Fecha Ult Mod',
         ];
     }
+    
+    public static function findByIdUser($id)
+    {
+        return static::findOne(['intIdUsuario' => $id]);
+    }
+    
+    
 }

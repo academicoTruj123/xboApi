@@ -29,6 +29,9 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface
     const STATUS_CUENTA_SUSPENDIDA = '0103';
     const STATUS_CUENTA_DESACTIVADA = '0104';
         
+    const ROL_CLIENTE = '0301';
+    const ROL_EMPRESA = '0302';
+    const ROL_ADMINISTRADOR = '0303';    
     /**
      * @inheritdoc
      */

@@ -65,7 +65,7 @@ $config = [
                 [
                     'class'=>'yii\rest\UrlRule',
                     //'pluralize'=>false,
-                    'controller' =>['solorest','loginrest','tablacodigorest'],                  
+                    'controller' =>['solorest','loginrest','tablacodigorest','clienterest','ubigeorest','empresarest'],                  
                     'tokens'=>[
                         '{id}'=>'<id:\\w+>'
                     ],
@@ -75,7 +75,8 @@ $config = [
                         'POST recuperarcontrasena'=>'loginrest/recuperarcontrasena',
                         'POST validarlogin'=>'loginrest/validarlogin',
                         'POST registrarloginempresa'=>'loginrest/registrarloginempresa',
-                        
+                        'POST findusuarioclientexiduser'=>'clienterest/findusuarioclientexiduser',
+                        'POST findusuarioempresaxiduser'=>'empresarest/findusuarioempresaxiduser',                        
                     ],
                 ]
             ],

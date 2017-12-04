@@ -69,7 +69,7 @@ class LoginrestController extends ActiveController
                    $modelUser->bitActivo = true;
                    $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
                    $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioClienteReg::LOGIN_CUENTA_FACEBOOK);
-                   $modelUser->intCodigoRol = 1;                                      
+                   $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_CLIENTE);                                       
                    $modelUser->save();
                                        
                    //REGISTRO DE USUARIOCLIENTE        
@@ -135,8 +135,8 @@ class LoginrestController extends ActiveController
             $modelUser->intCodigoEstado = $modeltablacodigo->getIdxCodigo($modelUser::STATUS_PENDIENTE_ACTIVACION);
             $modelUser->bitActivo = 1;
             $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
-            $modelUser->intTipoLogin = 1;
-            $modelUser->intCodigoRol = 1;
+            $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioClienteReg::LOGIN_CUENTA_SISTEMA);
+            $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_CLIENTE);             
             $modelUser->save();
 
             //REGISTRO DE USUARIOCLIENTE        
@@ -196,8 +196,8 @@ class LoginrestController extends ActiveController
                    $modelUser->intCodigoEstado = $modeltablacodigo->getIdxCodigo($modelUser::STATUS_CUENTA_ACTIVADA);
                    $modelUser->bitActivo = true;
                    $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
-                   $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioempresaReg::LOGIN_CUENTA_FACEBOOK);
-                   $modelUser->intCodigoRol = 1;                                                           
+                   $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioempresaReg::LOGIN_CUENTA_FACEBOOK);                               
+                   $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_EMPRESA);                                                                                             
                    $modelUser->save();
                                       
                    //REGISTRO DE USUARIOCLIENTE        
@@ -262,9 +262,9 @@ class LoginrestController extends ActiveController
                 $modelUser->generateAuthKey();
                 $modelUser->intCodigoEstado = $modeltablacodigo->getIdxCodigo(Usuario::STATUS_PENDIENTE_ACTIVACION);
                 $modelUser->bitActivo = 1;
-                $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
-                $modelUser->intTipoLogin = 1;
-                $modelUser->intCodigoRol = 1;
+                $modelUser->dtiFechaReg = date('Y-m-d H:i:s');                
+                $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioempresaReg::LOGIN_CUENTA_SISTEMA);                               
+                $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_EMPRESA);                 
                 $modelUser->save();
 
                 //REGISTRO DE USUARIOCLIENTE        
