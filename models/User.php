@@ -35,6 +35,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     {
         // coment
         return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        // oversion github
     }
 
     /**

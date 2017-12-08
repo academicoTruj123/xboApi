@@ -20,6 +20,7 @@ class Tablaprueba extends \yii\db\ActiveRecord
     {
         // este si vale netbeansssss
         return 'tablaprueba';
+        // este que no vale
     }
 
     /**
