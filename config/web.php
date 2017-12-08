@@ -32,7 +32,7 @@ $config = [
                 'class' => 'Swift_SmtpTransport',
                 'host' => '64.233.171.108',
                 'username' => 'chab.28.08@gmail.com',
-                'password' => 'pool1207',
+                'password' => 'Pool1207',
                 'port' => '587',
                 'encryption' => 'tls',   
                 'streamOptions' => [ 'ssl' =>

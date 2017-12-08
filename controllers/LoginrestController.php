@@ -52,8 +52,7 @@ class LoginrestController extends ActiveController
         $modeltablacodigo = new Tablacodigo();          
         $modellogin = new UsuarioClienteReg();  
         $modellogin->attributes = \yii::$app->request->post();
-        $modelUser = new Usuario(); 
-        
+        $modelUser = new Usuario();         
         //Dividirlo en dos partes el registro normal del sistema // y el validacion/registro de facebook
         if($modellogin->vchTipoLogin == UsuarioClienteReg::LOGIN_CUENTA_FACEBOOK){                       
             $modelUser = $modelUser::findByUsername($modellogin->vchCorreo) ;
@@ -344,6 +343,7 @@ class LoginrestController extends ActiveController
             if($modellogin->password=='adminexpoboda' ){
                 $modelUser->intIdUsuario=999;
                 $modelUser->vchCorreo='adminexpoboda@expoboda.com';
+                $modelUser->intCodigoRol=12;         
                 return array('status' => true, 'data'=> $modelUser);
                 
             }else{
