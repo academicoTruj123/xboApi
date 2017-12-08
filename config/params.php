@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'adminEmail' => 'chab.28.08@gmail.com',
+    'adminEmail' => '_mainaccount@flowers.pe',
 ];

@@ -98,11 +98,10 @@ class LoginrestController extends ActiveController
                    $modelacceso->intIdUsuario =$modelUser->intIdUsuario;
                    $modelacceso->bitActivo =true;
                    $modelacceso->dtiFechaInicio = date('Y-m-d H:i:s');
-                   $modelacceso->save();
-                
+                   $modelacceso->save();                
                    Yii::$app->mailer->compose()
                            ->setTo($modellogin->vchCorreo)
-                           ->setFrom('chab.28.08@gmail.com')
+                           ->setFrom(Yii::$app->params['adminEmail'])
                            ->setSubject('Saludo de Bienvenida')
                            ->setTextBody('Bienvenido a ExpoBoda.!!!'.$modellogin->vchNombres.', esperamos que disfrute su permanencia.')
                            ->send();         
@@ -161,7 +160,7 @@ class LoginrestController extends ActiveController
             $modelUsercliente->save();                 
             Yii::$app->mailer->compose()
                     ->setTo($modellogin->vchCorreo)
-                    ->setFrom('chab.28.08@gmail.com')
+                    ->setFrom(Yii::$app->params['adminEmail'])
                     ->setSubject('Codigo de verificacion')
                     ->setTextBody('Felicitaciones.!!!'.$modellogin->vchNombres.' acaba de registrar su cuenta, solo falta la activacion, para eso escriba el siguiente codigo de verificacion : '.$modelUser->vchCodVerificacion.', para confirmar su registro.')
                     ->send();         
@@ -229,7 +228,7 @@ class LoginrestController extends ActiveController
                 
                    Yii::$app->mailer->compose()
                            ->setTo($modellogin->vchCorreo)
-                           ->setFrom('chab.28.08@gmail.com')
+                           ->setFrom(Yii::$app->params['adminEmail'])
                            ->setSubject('Saludo de Bienvenida')
                            ->setTextBody('Bienvenido a ExpoBoda.!!!'.$modellogin->vchNombreComercial.', esperamos que disfrute su permanencia.')
                            ->send();         
@@ -290,7 +289,7 @@ class LoginrestController extends ActiveController
 
                 Yii::$app->mailer->compose()
                         ->setTo($modellogin->vchCorreo)
-                        ->setFrom('chab.28.08@gmail.com')
+                        ->setFrom(Yii::$app->params['adminEmail'])
                         ->setSubject('Codigo de verificacion')
                         ->setTextBody('Felicitaciones.!!!'.$modellogin->vchNombreComercial.' acaba de registrar su cuenta, solo falta la activacion, para eso escriba el siguiente codigo de verificacion : '.$modelUser->vchCodVerificacion.', para confirmar su registro.')
                         ->send();         
@@ -323,7 +322,7 @@ class LoginrestController extends ActiveController
         $modelUser->save();                                
         Yii::$app->mailer->compose()
                 ->setTo($modelUser->vchCorreo)
-                ->setFrom('chab.28.08@gmail.com')
+                ->setFrom(Yii::$app->params['adminEmail'])
                 ->setSubject('Recuperacion de password')
                 ->setTextBody('Hola .!!! acabamos reestabecer su password, nueva clave: '.$modellogin->password.' ')
                 ->send();          

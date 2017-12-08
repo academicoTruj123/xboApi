@@ -33,6 +33,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
+        // coment
         return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 

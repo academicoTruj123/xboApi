@@ -41,12 +41,26 @@ $config = [
                            'verify_peer_name' => false,
                        ],
                    ]                
-            ],
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            
+            ],            
         ],
+//        'mailer' => [
+//            'class' => 'yii\swiftmailer\Mailer',
+//            'transport' => [
+//                'class' => 'Swift_SmtpTransport',
+//                'host' => 'server161.web-hosting.com',
+//                'username' => '_mainaccount@flowers.pe',
+//                'password' => 'Luis.2017',
+//                'port' => '465',
+//                'encryption' => 'ssl',   
+//                'streamOptions' => [ 'ssl' =>
+//                       [ 'allow_self_signed' => true,
+//                           'verify_peer' => false,
+//                           'verify_peer_name' => false,
+//                       ],
+//                   ]      
+//            ],
+//            'useFileTransport' => false,    
+//        ],        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

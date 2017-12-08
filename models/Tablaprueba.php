@@ -18,6 +18,7 @@ class Tablaprueba extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
+        // este si vale netbeansssss
         return 'tablaprueba';
     }
 
