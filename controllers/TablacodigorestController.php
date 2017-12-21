@@ -13,5 +13,12 @@ use yii\rest\ActiveController;
 class TablacodigorestController extends ActiveController
 {
     public $modelClass ='app\models\Tablacodigo';
-        
+     
+    public function actionFindtablacodigoxcodigo(){
+        \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;                        
+        $codigo= \yii::$app->request->post();                
+        $model = new Tablacodigo();       
+        $model = $model->findxCodigo($codigo); 
+        return array('status' => true, 'data'=> $model);          
+    }
 }

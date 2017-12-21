@@ -20,6 +20,7 @@ use Yii;
  * @property string $dtiFechaUltMod
  * @property integer $intTipoLogin
  * @property integer $intCodigoRol
+ * @property integer $intTipoUsuario
  */
 class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface
 {
@@ -31,7 +32,12 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface
         
     const ROL_CLIENTE = '0301';
     const ROL_EMPRESA = '0302';
-    const ROL_ADMINISTRADOR = '0303';    
+    const ROL_ADMINISTRADOR = '0303';   
+    
+    const TIPO_CLIENTE = '0401';
+    const TIPO_EMPRESA = '0402';
+    const TIPO_ADMINISTRADOR = '0403'; 
+    
     /**
      * @inheritdoc
      */
@@ -41,13 +47,13 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritdoc intIdUsuario
      */
     public function rules()
     {
         return [
             [['vchCorreo', 'vchClave', 'vchCodVerificacion', 'intCodigoEstado', 'dtiFechaReg'], 'required'],
-            [['intCodigoEstado', 'intTipoLogin', 'intCodigoRol'], 'integer'],
+            [['intIdUsuario','intCodigoEstado', 'intTipoLogin', 'intCodigoRol','intTipoUsuario'], 'integer'],
             [['dtiFechaAlta', 'dtiFechaBaja', 'dtiFechaReg', 'dtiFechaUltMod'], 'safe'],
             [['bitActivo'], 'boolean'],
             [['vchCorreo'], 'string', 'max' => 250],
@@ -76,6 +82,7 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface
             'dtiFechaUltMod' => 'Dti Fecha Ult Mod',
             'intTipoLogin' => 'Int Tipo Login',
             'intCodigoRol' => 'Int Codigo Rol',
+            'intTipoUsuario' => 'Int Tipo Usuario',
         ];
     }
 
@@ -97,6 +104,16 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface
 
     public static function findIdentityByAccessToken($token, $type = null) {
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public static function findByUsernameTipoLogin($correo,$tipologin)
+    {
+        return static::findOne(['vchCorreo' => $correo,'intTipoLogin' => $tipologin]);
+    }
+    
+    public static function findByUsernameTipoUsuario($correo,$tipousuario)
+    {
+        return static::findOne(['vchCorreo' => $correo,'intTipoUsuario' => $tipousuario]);
     }
     
     public static function findByUsername($correo)

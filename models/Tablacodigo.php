@@ -73,4 +73,8 @@ class Tablacodigo extends \yii\db\ActiveRecord
     public function getIdxCodigo($codigo) {        
         return static::findOne(['vchCodigo' => $codigo])->intIdTablaCodigo;           
     }
+    
+    public function findxCodigo($codigo) {        
+        return static::findOne(['vchCodigo' => $codigo]);           
+    }
 }

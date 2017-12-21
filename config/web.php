@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'basic',    
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -27,6 +27,7 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mail',            
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
@@ -79,7 +80,7 @@ $config = [
                 [
                     'class'=>'yii\rest\UrlRule',
                     //'pluralize'=>false,
-                    'controller' =>['solorest','loginrest','tablacodigorest','clienterest','ubigeorest','empresarest'],                  
+                    'controller' =>['solorest','loginrest','tablacodigorest','clienterest','ubigeorest','empresarest','usuariorest'],                  
                     'tokens'=>[
                         '{id}'=>'<id:\\w+>'
                     ],
@@ -91,6 +92,9 @@ $config = [
                         'POST registrarloginempresa'=>'loginrest/registrarloginempresa',
                         'POST findusuarioclientexiduser'=>'clienterest/findusuarioclientexiduser',
                         'POST findusuarioempresaxiduser'=>'empresarest/findusuarioempresaxiduser',                        
+                        'POST findusuarioxiduser'=>'usuariorest/findusuarioxiduser',
+                        'POST updatetipouno'=>'usuariorest/updatetipouno', 
+                        'POST findtablacodigoxcodigo'=>'tablacodigorest/findtablacodigoxcodigo',                                                 
                     ],
                 ]
             ],

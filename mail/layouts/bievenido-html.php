@@ -219,24 +219,8 @@ use yii\helpers\Html;
                                       <img src="http://www.satkarcaterers.com/wp-content/uploads/2014/05/fitnes-1.png" alt="" width="" height="70%" border="0" style="border:0; outline:none; text-decoration:none; display:block;">                                    
                                   </td>
                                   <td width="70%" style="text-align:center;">
-                                      <h1 style="margin:0px;"><font color="#fff">EXPOBODA</font></h1>                                                                            
-                                      <?php switch($this->params['subtitulocorreo']) {
-                                            case "Bienvenida":
-                                                echo '<p style="margin-top:-3px;"> <font color="#e7f4f2"> Bienvenida</font></p>';
-                                                break; 
-                                            case "Verificacion":
-                                                echo '<p style="margin-top:-3px;"> <font color="#e7f4f2"> Verificacion</font></p>';
-                                                break; 
-                                            case "Restauracion":
-                                                echo '<p style="margin-top:-3px;"> <font color="#e7f4f2"> Restauracion</font></p>';
-                                                break;     
-                                            case "Actualizacion":
-                                                echo '<p style="margin-top:-3px;"> <font color="#e7f4f2"> Actualizacion de clave</font></p>';
-                                                break;                                             
-                                            default :                    
-                                                break;
-                                        };                                        
-                                      ?>                                      
+                                      <h1 style="margin:0px;"><font color="#fff">EXPOBODA</font></h1>                                                                                                                                                    
+                                      <p style="margin-top:-3px;"> <font color="#e7f4f2"> Bienvenida</font></p>
                                   </td>
                               </tr> 
                           </table>                           
@@ -248,24 +232,7 @@ use yii\helpers\Html;
                               <tr>
                                   <td class="wrapper">
                                       <font color="#818080">
-                                          
-                                      <?php switch($this->params['subtitulocorreo']) {
-                                            case "Bienvenida":
-                                                echo 'Bienvenido(a) a ExpoBoda.! <b>'.$this->params['nombreusercorreo'].'</b>, esperamos que disfrute su permanencia.';
-                                                break; 
-                                            case "Verificacion":
-                                                echo 'Felicitaciones.! <b>'.$this->params['nombreusercorreo'].'</b> acaba de registrar su cuenta, solo falta la activacion, para eso escriba el siguiente codigo de verificacion : <b>'.$this->params['codverificacorreo'].'</b>, para confirmar su registro.';
-                                                break; 
-                                            case "Restauracion":                                                
-                                                echo 'Hola .!<b>'.$this->params['nombreusercorreo'].'</b> acabamos reestabecer su password,su nueva clave es: <b>'.$this->params['restaurapassw'].'</b>.<br>Esta clave puede cambiarla desde su propio perfil.';                                                
-                                                break;  
-                                            case "Actualizacion":                                                
-                                                echo 'Hola .!<b>'.$this->params['nombreusercorreo'].'</b> ud acaba de actualizar su clave,su nueva clave es: <b>'.$this->params['restaurapassw'].'</b>.<br>Esta clave fue actualizada desde su propio perfil.';                                                
-                                                break;                                             
-                                            default :                    
-                                                break;
-                                        };                                        
-                                      ?>                                                                                                                              
+                                          Sr(a).{{}} Bienvenido!!! a Expoboda.                                      
                                       </font>                                    
                                   </td>                              
                               </tr>                            

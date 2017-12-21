@@ -1,5 +1,7 @@
 <?php
 
 return [
-    'adminEmail' => '_mainaccount@flowers.pe',
+    'adminEmail' => 'chab.28.08@gmail.com'
+   // 'subtituloEmail'=>'No Configurado',
+    //'adminEmail' => 'prueba@flowers.pe',
 ];

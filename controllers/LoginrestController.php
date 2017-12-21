@@ -69,6 +69,7 @@ class LoginrestController extends ActiveController
                    $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
                    $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioClienteReg::LOGIN_CUENTA_FACEBOOK);
                    $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_CLIENTE);                                       
+                   $modelUser->intTipoUsuario = $modeltablacodigo->getIdxCodigo($modelUser::TIPO_CLIENTE);  
                    $modelUser->save();
                                        
                    //REGISTRO DE USUARIOCLIENTE        
@@ -76,15 +77,15 @@ class LoginrestController extends ActiveController
                    $modelUsercliente->intIdUsucliente=0;
                    $modelUsercliente->intIdUsuario = $modelUser->intIdUsuario;
                    $modelUsercliente->vchNombres = $modellogin->vchNombres;
-                   $modelUsercliente->vchApellidoPaterno=' ';
-                   $modelUsercliente->vchApellidoMaterno=' ';
+                   $modelUsercliente->vchApellidoPaterno='';
+                   $modelUsercliente->vchApellidoMaterno='';
                    $modelUsercliente->intCodigoSexo=0;
                    $modelUsercliente->intIdUbigeo=0;
-                   $modelUsercliente->vchDomicilioUbigeo=' ';
-                   $modelUsercliente->vchDomicilioDireccion=' ';
-                   $modelUsercliente->vchDomicilioReferencia=' ';
-                   $modelUsercliente->vchCelular=' ';
-                   $modelUsercliente->vchTelefonoFijo=' ';
+                   $modelUsercliente->vchDomicilioUbigeo='';
+                   $modelUsercliente->vchDomicilioDireccion='';
+                   $modelUsercliente->vchDomicilioReferencia='';
+                   $modelUsercliente->vchCelular='';
+                   $modelUsercliente->vchTelefonoFijo='';
                    $modelUsercliente->intCodigoEstado=1 ;
                    $modelUsercliente->bitActivo=true;
                    $modelUsercliente->intIdUsuarioReg=0;
@@ -99,12 +100,17 @@ class LoginrestController extends ActiveController
                    $modelacceso->bitActivo =true;
                    $modelacceso->dtiFechaInicio = date('Y-m-d H:i:s');
                    $modelacceso->save();                
-                   Yii::$app->mailer->compose()
-                           ->setTo($modellogin->vchCorreo)
-                           ->setFrom(Yii::$app->params['adminEmail'])
-                           ->setSubject('Saludo de Bienvenida')
-                           ->setTextBody('Bienvenido a ExpoBoda.!!!'.$modellogin->vchNombres.', esperamos que disfrute su permanencia.')
-                           ->send();         
+                   
+                    Yii::$app->mailer->view->params['subtitulocorreo'] = 'Bienvenida';
+                    Yii::$app->mailer->view->params['nombreusercorreo'] = $modellogin->vchNombres;                
+                    Yii::$app->mailer->compose(                    
+                    ['html' => 'layouts/html']                    
+                    )
+                    ->setTo($modellogin->vchCorreo)
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setSubject('Saludo de Bienvenida')                
+                    ->send();  
+            
                     return array('status' => true, 'data'=> $modelUser);   
          
             }else{ 
@@ -134,7 +140,8 @@ class LoginrestController extends ActiveController
             $modelUser->bitActivo = 1;
             $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
             $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioClienteReg::LOGIN_CUENTA_SISTEMA);
-            $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_CLIENTE);             
+            $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_CLIENTE);   
+            $modelUser->intTipoUsuario = $modeltablacodigo->getIdxCodigo($modelUser::TIPO_CLIENTE);  
             $modelUser->save();
 
             //REGISTRO DE USUARIOCLIENTE        
@@ -142,15 +149,15 @@ class LoginrestController extends ActiveController
             $modelUsercliente->intIdUsucliente=0;
             $modelUsercliente->intIdUsuario = $modelUser->intIdUsuario;
             $modelUsercliente->vchNombres = $modellogin->vchNombres;
-            $modelUsercliente->vchApellidoPaterno=' ';
-            $modelUsercliente->vchApellidoMaterno=' ';
+            $modelUsercliente->vchApellidoPaterno='';
+            $modelUsercliente->vchApellidoMaterno='';
             $modelUsercliente->intCodigoSexo=0;
             $modelUsercliente->intIdUbigeo=0;
-            $modelUsercliente->vchDomicilioUbigeo=' ';
-            $modelUsercliente->vchDomicilioDireccion=' ';
-            $modelUsercliente->vchDomicilioReferencia=' ';
-            $modelUsercliente->vchCelular=' ';
-            $modelUsercliente->vchTelefonoFijo=' ';
+            $modelUsercliente->vchDomicilioUbigeo='';
+            $modelUsercliente->vchDomicilioDireccion='';
+            $modelUsercliente->vchDomicilioReferencia='';
+            $modelUsercliente->vchCelular='';
+            $modelUsercliente->vchTelefonoFijo='';
             $modelUsercliente->intCodigoEstado=1 ;
             $modelUsercliente->bitActivo=true;
             $modelUsercliente->intIdUsuarioReg=0;
@@ -158,13 +165,17 @@ class LoginrestController extends ActiveController
             $modelUsercliente->intIdUsuarioUltMod=0;
             $modelUsercliente->dtiFechaUltMod=$modelUsercliente->dtiFechaReg;
             $modelUsercliente->save();                 
-            Yii::$app->mailer->compose()
+            Yii::$app->mailer->view->params['subtitulocorreo'] = 'Verificacion';
+            Yii::$app->mailer->view->params['nombreusercorreo'] = $modellogin->vchNombres;
+            Yii::$app->mailer->view->params['codverificacorreo'] = $modelUser->vchCodVerificacion;
+            Yii::$app->mailer->compose(                    
+                    ['html' => 'layouts/html']                    
+                    )
                     ->setTo($modellogin->vchCorreo)
                     ->setFrom(Yii::$app->params['adminEmail'])
-                    ->setSubject('Codigo de verificacion')
-                    ->setTextBody('Felicitaciones.!!!'.$modellogin->vchNombres.' acaba de registrar su cuenta, solo falta la activacion, para eso escriba el siguiente codigo de verificacion : '.$modelUser->vchCodVerificacion.', para confirmar su registro.')
+                    ->setSubject('Codigo de verificacion')                     
                     ->send();         
-             return array('status' => true, 'data'=> $modelUser);                                                  
+             return array('status' => true, 'data'=> $modelUser);                 
         }
         
     }
@@ -195,7 +206,8 @@ class LoginrestController extends ActiveController
                    $modelUser->bitActivo = true;
                    $modelUser->dtiFechaReg = date('Y-m-d H:i:s');
                    $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioempresaReg::LOGIN_CUENTA_FACEBOOK);                               
-                   $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_EMPRESA);                                                                                             
+                   $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_EMPRESA);    
+                   $modelUser->intTipoUsuario = $modeltablacodigo->getIdxCodigo($modelUser::TIPO_EMPRESA);  
                    $modelUser->save();
                                       
                    //REGISTRO DE USUARIOCLIENTE        
@@ -224,14 +236,17 @@ class LoginrestController extends ActiveController
                     $modelacceso->intIdUsuario =$modelUser->intIdUsuario;
                     $modelacceso->bitActivo =true;
                     $modelacceso->dtiFechaInicio = date('Y-m-d H:i:s');
-                    $modelacceso->save();
-                
-                   Yii::$app->mailer->compose()
-                           ->setTo($modellogin->vchCorreo)
-                           ->setFrom(Yii::$app->params['adminEmail'])
-                           ->setSubject('Saludo de Bienvenida')
-                           ->setTextBody('Bienvenido a ExpoBoda.!!!'.$modellogin->vchNombreComercial.', esperamos que disfrute su permanencia.')
-                           ->send();         
+                    $modelacceso->save();                   
+                    Yii::$app->mailer->view->params['subtitulocorreo'] = 'Bienvenida';
+                    Yii::$app->mailer->view->params['nombreusercorreo'] = $modellogin->vchNombreComercial;                
+                    Yii::$app->mailer->compose(                    
+                    ['html' => 'layouts/html']                    
+                    )
+                    ->setTo($modellogin->vchCorreo)
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setSubject('Saludo de Bienvenida')                
+                    ->send(); 
+                    
                     return array('status' => true, 'data'=> $modelUser);   
          
             }else{ 
@@ -262,7 +277,8 @@ class LoginrestController extends ActiveController
                 $modelUser->bitActivo = 1;
                 $modelUser->dtiFechaReg = date('Y-m-d H:i:s');                
                 $modelUser->intTipoLogin = $modeltablacodigo->getIdxCodigo(UsuarioempresaReg::LOGIN_CUENTA_SISTEMA);                               
-                $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_EMPRESA);                 
+                $modelUser->intCodigoRol = $modeltablacodigo->getIdxCodigo($modelUser::ROL_EMPRESA); 
+                $modelUser->intTipoUsuario = $modeltablacodigo->getIdxCodigo($modelUser::TIPO_EMPRESA);                
                 $modelUser->save();
 
                 //REGISTRO DE USUARIOCLIENTE        
@@ -286,13 +302,17 @@ class LoginrestController extends ActiveController
                 $modelUserempresa->intIdUsuarioUltMod =0;
                 $modelUserempresa->dtiFechaUltMod=$modelUserempresa->dtiFechaReg;        
                 $modelUserempresa->save();    
-
-                Yii::$app->mailer->compose()
-                        ->setTo($modellogin->vchCorreo)
-                        ->setFrom(Yii::$app->params['adminEmail'])
-                        ->setSubject('Codigo de verificacion')
-                        ->setTextBody('Felicitaciones.!!!'.$modellogin->vchNombreComercial.' acaba de registrar su cuenta, solo falta la activacion, para eso escriba el siguiente codigo de verificacion : '.$modelUser->vchCodVerificacion.', para confirmar su registro.')
-                        ->send();         
+                 
+            Yii::$app->mailer->view->params['subtitulocorreo'] = 'Verificacion';
+            Yii::$app->mailer->view->params['nombreusercorreo'] = $modellogin->vchNombreComercial;
+            Yii::$app->mailer->view->params['codverificacorreo'] = $modelUser->vchCodVerificacion;
+            Yii::$app->mailer->compose(                    
+                    ['html' => 'layouts/html']                    
+                    )
+                    ->setTo($modellogin->vchCorreo)
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setSubject('Codigo de verificacion')                     
+                    ->send();                   
                  return array('status' => true, 'data'=> $modelUser);
          
         }        
@@ -314,18 +334,28 @@ class LoginrestController extends ActiveController
     
     public function actionRecuperarcontrasena(){
         \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;          
-        $modellogin = new LoginForm();
-        $modellogin->attributes = \yii::$app->request->post();                
+        $modellogin = new LoginForm();                        
+        $modellogin->attributes = \yii::$app->request->post();                           
         $modelUser = new Usuario();        
         $modelUser = Usuario::findByUsername($modellogin->username);
-        $modelUser->setPassword($modellogin->password);
+        if($modelUser==null)
+        {
+            return array('status' => false, 'data'=> 'No se puede restaurar el password,correo no registrado'); 
+        }                
+        $modelUser->setPassword($modellogin->password);        
         $modelUser->save();                                
-        Yii::$app->mailer->compose()
-                ->setTo($modelUser->vchCorreo)
-                ->setFrom(Yii::$app->params['adminEmail'])
-                ->setSubject('Recuperacion de password')
-                ->setTextBody('Hola .!!! acabamos reestabecer su password, nueva clave: '.$modellogin->password.' ')
-                ->send();          
+        
+            Yii::$app->mailer->view->params['subtitulocorreo'] = 'Restauracion';
+            Yii::$app->mailer->view->params['nombreusercorreo'] = $modellogin->username;
+            Yii::$app->mailer->view->params['restaurapassw'] = $modellogin->password;
+            Yii::$app->mailer->compose(                    
+                    ['html' => 'layouts/html']                    
+                    )
+                    ->setTo($modelUser->vchCorreo)
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setSubject('Restauracion de password')                     
+                    ->send();   
+            
         return array('status' => true, 'data'=> $modelUser); 
     }
     
@@ -348,8 +378,10 @@ class LoginrestController extends ActiveController
             }else{
                 return array('status' => false, 'data'=>'Credenciales incorrectas');
             }            
-        }else{            
-            $modelUser = Usuario::findByUsername($modellogin->username);    
+        }else{                        
+            //$modelUser = Usuario::findByUsernameTipoLogin($modellogin->username,$modellogin->intTipoLogin);  
+            $modellogin->intTipoUsuario = $modeltablacodigo->getIdxCodigo($modellogin->vchTipoUsuario);
+            $modelUser = Usuario::findByUsernameTipoUsuario($modellogin->username,$modellogin->intTipoUsuario); 
         }
                                 
         if($modelUser == null){

@@ -17,6 +17,8 @@ class LoginForm extends Model
     public $password;
     public $rememberMe = true;
     public $intTipoLogin;   
+    public $intTipoUsuario;  
+    public $vchTipoUsuario; 
 
     private $_user = false;
 
@@ -29,10 +31,13 @@ class LoginForm extends Model
         return [
             // username and password are both required
             [['username', 'password'], 'required'],
+            [['intTipoLogin', 'intTipoUsuario'], 'integer'],
+            [['vchTipoUsuario'], 'string', 'max' => 30],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            
         ];
     }
 

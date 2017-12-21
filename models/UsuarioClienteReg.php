@@ -18,7 +18,7 @@ class UsuarioClienteReg extends Model
     public $intTipoLogin;   
     public $vchTipoLogin;  
     const LOGIN_CUENTA_SISTEMA = '0201';
-    const LOGIN_CUENTA_FACEBOOK = '0202';
+    const LOGIN_CUENTA_FACEBOOK = '0202';   
     
     /**
      * @inheritdoc
